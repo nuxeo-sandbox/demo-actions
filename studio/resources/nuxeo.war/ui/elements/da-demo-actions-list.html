@@ -27,9 +27,17 @@
 		  behaviors: [I18nBehavior],
       properties: {
  
-        visible: Boolean
+        visible: Boolean,
+                actionContext: {
+          type: Object,
+          computed: '_actionContext(user, routeParams)',
+        }
       },
 
+      _actionContext: function() {
+        return { user: this.user, routeParams: this.routeParams };
+      },
+      
       /**
        * And here you can add your custom functions.
        */
