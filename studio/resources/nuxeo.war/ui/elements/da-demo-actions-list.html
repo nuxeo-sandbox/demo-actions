@@ -1,0 +1,37 @@
+<!--
+`da-demo-actions-list`
+@group Nuxeo UI
+@element da-demo-actions-list
+-->
+<dom-module id="da-demo-actions-list">
+  <template>
+    <style include="nuxeo-styles">
+      .content {
+        @apply --layout-vertical;
+        padding: 0 16px;
+      }
+    </style>
+
+    <div class="header">Custom Drawer Page</div>
+    <div class="content">
+      <div>This is your starting point for a drawer page.</div>
+    </div>
+
+  </template>
+
+  <script>
+    Polymer({
+      is: 'da-demo-actions-list',
+      behaviors: [Nuxeo.LayoutBehavior],
+      properties: {
+        /**
+         * Here you can add your custom properties.
+         */
+      },
+
+      /**
+       * And here you can add your custom functions.
+       */
+    });
+  </script>
+</dom-module>
