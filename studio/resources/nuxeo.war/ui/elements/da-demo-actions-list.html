@@ -24,9 +24,9 @@
   <script>
     Polymer({
       is: 'da-demo-actions-list',
-		  behaviors: [I18nBehavior],
+		  behaviors: [Nuxeo.I18nBehavior],
       properties: {
- 
+
         visible: Boolean,
                 actionContext: {
           type: Object,
@@ -37,7 +37,7 @@
       _actionContext: function() {
         return { foo: "bar" };
       },
-      
+
       /**
        * And here you can add your custom functions.
        */
