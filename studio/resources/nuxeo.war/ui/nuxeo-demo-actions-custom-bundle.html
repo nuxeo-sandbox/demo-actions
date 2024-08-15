@@ -4,13 +4,18 @@ CUSTOM CODE SPACE
 ***
 Use this file to put any custom code you want to deploy on top of Studio's automatically generated configuration.
 -->
-<nuxeo-slot-content name="demoActionOne" slot="DEMO_ACTIONS">
+
+<!-- TODO: these contributions are only used for testing and should be disabled before any release -->
+<nuxeo-slot-content name="demoActionOne"
+                    slot="DEMO_ACTIONS">
   <template>
-    Foo
+    <da-demo-action></da-demo-action>
   </template>
 </nuxeo-slot-content>
-<nuxeo-slot-content name="demoActionTwo" slot="DEMO_ACTIONS">
+
+<nuxeo-slot-content name="demoActionTwo"
+                    slot="DEMO_ACTIONS">
   <template>
-    Bar
+    <da-demo-action></da-demo-action>
   </template>
 </nuxeo-slot-content>
