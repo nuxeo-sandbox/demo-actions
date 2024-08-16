@@ -9,27 +9,49 @@
       .description {
         margin-left: 10px
       }
+
+      .response {
+        margin-top: 10px;
+      }
+
+      .formatted-response {
+        border: 1px solid silver;
+        padding: 10px 20px;
+        border-radius: 4px;
+        margin-top: 5px;
+        margin-bottom: 5px;
+      }
     </style>
+    <nuxeo-card>
 
-    <nuxeo-card class="layout horizontal center">
+      <div class="layout horizontal center">
+        <nuxeo-operation-button-no-icon label="[[label]]"
+                                        operation="[[operation]]"
+                                        input="[[input]]"
+                                        sync-indexing$="[[syncIndexing]]"
+                                        params="[[params]]"
+                                        response="{{response}}"
+                                        notification="[[notification]]"
+                                        download="[[download]]"
+                                        event="[[event]]"
+                                        detail="[[detail]]"
+                                        async$="[[async]]"
+                                        poll-interval="[[pollInterval]]"
+                                        error-label="[[errorLabel]]">
+        </nuxeo-operation-button-no-icon>
+        <div class="description">[[i18n(description)]]</div>
+      </div>
 
-      <nuxeo-operation-button-no-icon label="[[label]]"
-                                      operation="[[operation]]"
-                                      input="[[input]]"
-                                      sync-indexing$="[[syncIndexing]]"
-                                      params="[[params]]"
-                                      response="{{response}}"
-                                      notification="[[notification]]"
-                                      download="[[download]]"
-                                      event="[[event]]"
-                                      detail="[[detail]]"
-                                      async$="[[async]]"
-                                      poll-interval="[[pollInterval]]"
-                                      error-label="[[errorLabel]]">
-      </nuxeo-operation-button-no-icon>
 
-      <div class="description">[[i18n(description)]]</div>
-      <div class="description">[[response]]</div>
+      <div class="layout flex horizontal response"
+           hidden$="[[!response]]">
+
+        <div class="layout vertical">
+          <label>Response</label>
+          <pre class="formatted-response"><code id="codeResponse">[[_formatResponse(response)]]</code></pre>
+        </div>
+        <div class="layout flex"></div>
+      </div>
 
     </nuxeo-card>
 
@@ -125,11 +147,33 @@
 
       },
 
-      observers: ["_debug(response)"],
+      _formatResponse: function (response) {
+        if (response) {
+          this.$.codeResponse.innerHTML = this.prettyPrint(response);
+        }
+      },
 
-      _debug: function (response) {
-        debugger;
+      // Adapted from https://codepen.io/decodigo/pen/JjzWwr
+      prettyPrint: function (jsontext) {
+        var jsonLine = /^( *)("[\w]+": )?("[^"]*"|[\w.+-]*)?([,[{])?$/mg;
+        var replacer = function (match, pIndent, pKey, pVal, pEnd) {
+          var key = '<span class="json-key" style="color: brown">',
+            val = '<span class="json-value" style="color: navy">',
+            str = '<span class="json-string" style="color: olive">',
+            r = pIndent || '';
+          if (pKey)
+            r = r + key + pKey.replace(/[": ]/g, '') + '</span>: ';
+          if (pVal)
+            r = r + (pVal[0] == '"' ? str : val) + pVal + '</span>';
+          return r + (pEnd || '');
+        };
+
+        return JSON.stringify(jsontext, null, 3)
+          .replace(/&/g, '&amp;').replace(/\\"/g, '&quot;')
+          .replace(/</g, '&lt;').replace(/>/g, '&gt;')
+          .replace(jsonLine, replacer);
       }
+
     });
   </script>
 </dom-module>
