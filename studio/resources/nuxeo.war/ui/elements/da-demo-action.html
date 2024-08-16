@@ -3,10 +3,15 @@
 @group Nuxeo UI
 @element da-demo-action
 -->
+<!--
+A nuxeo card element that provides a button to call and operation and an area to
+display a description for that operations. Also provides the ability to view the
+JSON result of the operation.
+-->
 <dom-module id="da-demo-action">
   <template>
     <style include="iron-flex iron-flex-alignment nuxeo-styles">
-      .description {
+      .displayed-to-right {
         margin-left: 10px
       }
 
@@ -40,18 +45,20 @@
                                         poll-interval="[[pollInterval]]"
                                         error-label="[[errorLabel]]">
         </nuxeo-operation-button-no-icon>
-        <div class="description">[[i18n(description)]]</div>
+        <div class="layout flex displayed-to-right">[[i18n(description)]]</div>
+        <paper-toggle-button hidden$="[[!response]]"
+                             checked="{{_showResponse}}"
+                             class="displayed-to-right">[[i18n('da.label.show-response-button-label')]]</paper-toggle-button>
       </div>
 
-
+      <!-- Provide ability to display JSON response from the operation. -->
       <div class="layout flex horizontal response"
-           hidden$="[[!response]]">
-
+           hidden$="[[!_showResponse]]">
+        <div class="layout flex"></div>
         <div class="layout vertical">
           <label>Response</label>
           <pre class="formatted-response"><code id="codeResponse">[[_formatResponse(response)]]</code></pre>
         </div>
-        <div class="layout flex"></div>
       </div>
 
     </nuxeo-card>
@@ -61,9 +68,10 @@
   <script>
     Polymer({
       is: 'da-demo-action',
+
       behaviors: [Nuxeo.LayoutBehavior],
+
       properties: {
-        label: String,
 
         /* The id of the operation, automation chain or script to call. */
         operation: String,
@@ -142,8 +150,25 @@
           type: String,
         },
 
+
+        /**
+        * Label for the action button.
+        */
+        label: String,
+
+        /**
+        * Description for the action.
+        */
         description: {
           type: String,
+        },
+
+        /**
+        * Toggle display of response JSON.
+        */
+        _showResponse: {
+          type: Boolean,
+          value: false
         }
 
       },
