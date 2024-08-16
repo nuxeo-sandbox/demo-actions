@@ -9,20 +9,22 @@
 
     </style>
 
-<nuxeo-page>
+    <nuxeo-page>
 
-<div slot="header">
-  <div>[[i18n('da.label.demo-actions-page')]]</div>
-</div>
-    <div class="content">
-      <nuxeo-card collapsible opened>
-        <div>[[i18n('da.label.demo-actions-page-description')]]</div>
-      </nuxeo-card>
+      <div slot="header">
+        <div>[[i18n('da.label.demo-actions-page')]]</div>
+      </div>
+      <div class="content">
+        <nuxeo-card collapsible
+                    opened>
+          <div>[[i18n('da.label.demo-actions-page-description')]]</div>
+        </nuxeo-card>
 
-      <nuxeo-slot slot="DEMO_ACTIONS"
-                  model="[[mySlotModel]]"></nuxeo-slot>
+        <nuxeo-slot slot="DEMO_ACTIONS"
+                    model="[[mySlotModel]]">
+        </nuxeo-slot>
 
-    </div>
+      </div>
 
     </nuxeo-page>
   </template>
