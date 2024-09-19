@@ -16,7 +16,7 @@ Contribute your content to the `DEMO_ACTIONS` slot. It will be listed on the pag
 </nuxeo-slot-content>
 ```
 
-Generally speaking `da-demo-action` won’t return anything. Its primary use case is to fire operations that don’t have output.
+`da-demo-action` provides ability to display the JSON response from the operation. If you need more complex return handling, use a custom element.
 
 For custom contributions, it’s recommended to surround your contribution with a nuxeo-card, e.g.:
 
