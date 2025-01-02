@@ -43,7 +43,8 @@ JSON result of the operation.
                                         detail="[[detail]]"
                                         async$="[[async]]"
                                         poll-interval="[[pollInterval]]"
-                                        error-label="[[errorLabel]]">
+                                        error-label="[[errorLabel]]"
+                                        display-spinner="[[displaySpinner]]">
         </nuxeo-operation-button-no-icon>
         <div class="layout flex displayed-to-right">[[i18n(description)]]</div>
         <paper-toggle-button hidden$="[[!response]]"
@@ -72,6 +73,11 @@ JSON result of the operation.
       behaviors: [Nuxeo.LayoutBehavior],
 
       properties: {
+        /* See displaySpinner property in nuxeo-operation-button-no-icon */
+        displaySpinner: {
+          type: Boolean,
+          value: false
+        },
 
         /* The id of the operation, automation chain or script to call. */
         operation: String,
