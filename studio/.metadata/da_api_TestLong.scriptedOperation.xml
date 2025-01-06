@@ -1,0 +1,7 @@
+<scriptedOperation id="da_api_TestLong" version="1.2">
+  <description></description>
+  <inputType>void</inputType>
+  <outputType>void</outputType>
+  <category>javascript</category>
+  <disableHelperComments>true</disableHelperComments>
+</scriptedOperation>
