@@ -13,10 +13,11 @@ nuxeo-operation-button doesn't seem to support it.
 And a bug fix for https://jira.nuxeo.com/browse/ELEMENTS-1071;
 nuxeo-operation-button doesn't actually use the `response` param.
 
-And also an optional spinner to have a UI while waiting fomr completion.
+And an optional spinner displayed during action execution.
 -->
 <dom-module id="nuxeo-operation-button-no-icon">
   <template>
+
     <style include="nuxeo-action-button-styles nuxeo-styles">
       .spinner {
         margin-left: 1em;
@@ -49,28 +50,19 @@ And also an optional spinner to have a UI while waiting fomr completion.
   <script>
     Polymer({
       is: 'nuxeo-operation-button-no-icon',
+
       behaviors: [
         Nuxeo.NotifyBehavior,
         Nuxeo.I18nBehavior
       ],
 
       properties: {
+
         /* Label (shown inside menu dropdowns and on tooltips) */
         label: String,
 
         /* The id of the operation, automation chain or script to call. */
         operation: String,
-
-        /* If true, a spinner is displayed until the operation completes.
-         * If the operaiton completes too quicly, we wait a bit (itcan be
-         * confusing for a user to see a spinned displayed only half a second).
-         * (This is not in the original nuxeo-operation-button)
-         */
-        displaySpinner: {
-          type: Boolean,
-          value: false
-        },
-        spinnerStart: Date,
 
         /* Pass contextual information that will be forwarded to the operation,
          * automation chain or script triggered as the input for the first
@@ -144,46 +136,18 @@ And also an optional spinner to have a UI while waiting fomr completion.
          */
         errorLabel: {
           type: String,
-        }
+        },
+
+        /* If true, a spinner is displayed until the operation completes. */
+        displaySpinner: {
+          type: Boolean,
+          value: false
+        },
+
+        // TODO: What does this do?
+        spinnerStart: Date
 
       },
-
-      // ============================== Spinner
-      _spinnerStart: function () {
-        if (this.displaySpinner) {
-          this.$.spinner.active = true;
-          this.spinnerStart = Date.now();
-        }
-      },
-
-      // Let the spinner last at least 2-3 seconds, it's good UX
-      _spinnerStop: function (forceStop) {
-
-        if (!this.displaySpinner) {
-          return;
-        }
-
-        if (forceStop) {
-          this.$.spinner.active = false;
-          return;
-        }
-
-        let intervall, ellapsed;
-
-        ellapsed = Date.now() - this.spinnerStart;
-        if (ellapsed > 2000) {
-          intervall = 10;
-        } else {
-          intervall = 2500 - ellapsed
-        }
-
-        var thisObj = this;
-        window.setTimeout(function () {
-          thisObj.$.spinner.active = false;
-        }, intervall);
-
-      },
-      // ============================== /spinner
 
       _execute: function () {
         this._spinnerStart();
@@ -324,7 +288,6 @@ And also an optional spinner to have a UI while waiting fomr completion.
         document.body.removeChild(a);
       },
 
-
       _isPageProviderDisplayBehavior: function (input) {
         return (
           input &&
@@ -398,6 +361,42 @@ And also an optional spinner to have a UI while waiting fomr completion.
           duration: 0,
           error,
         });
+      },
+
+      _spinnerStart: function () {
+        if (this.displaySpinner) {
+          this.$.spinner.active = true;
+          this.spinnerStart = Date.now();
+        }
+      },
+
+      _spinnerStop: function (forceStop) {
+
+        if (!this.displaySpinner) {
+          return;
+        }
+
+        if (forceStop) {
+          this.$.spinner.active = false;
+          return;
+        }
+
+        let intervall, ellapsed;
+
+        // Even if the operation is fast, display the spinner for at least 2
+        // seconds.
+        ellapsed = Date.now() - this.spinnerStart;
+        if (ellapsed > 2000) {
+          intervall = 10;
+        } else {
+          intervall = 2500 - ellapsed;
+        }
+
+        var thisObj = this;
+        window.setTimeout(function () {
+          thisObj.$.spinner.active = false;
+        }, intervall);
+
       }
 
     });
