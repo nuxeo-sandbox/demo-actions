@@ -21,6 +21,7 @@ And an optional spinner displayed during action execution.
     <style include="nuxeo-action-button-styles nuxeo-styles">
       .spinner {
         margin-left: 1em;
+        display: none;
       }
     </style>
 
@@ -40,7 +41,6 @@ And an optional spinner displayed during action execution.
          on-click="_execute">
       <paper-button class="primary">[[i18n(label)]]</paper-button>
       <paper-spinner class="spinner"
-                     hidden$="[[!displaySpinner]]"
                      id="spinner">
       </paper-spinner>
     </div>
@@ -365,6 +365,7 @@ And an optional spinner displayed during action execution.
 
       _spinnerStart: function () {
         if (this.displaySpinner) {
+          this.$.spinner.style.display = "inline-block";
           this.$.spinner.active = true;
           this.spinnerStart = Date.now();
         }
@@ -377,6 +378,7 @@ And an optional spinner displayed during action execution.
         }
 
         if (forceStop) {
+          thisObj.$.spinner.style.display = "none";
           this.$.spinner.active = false;
           return;
         }
@@ -394,6 +396,7 @@ And an optional spinner displayed during action execution.
 
         var thisObj = this;
         window.setTimeout(function () {
+          thisObj.$.spinner.style.display = "none";
           thisObj.$.spinner.active = false;
         }, interval);
 
