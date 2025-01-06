@@ -255,7 +255,7 @@ And disable button while action is executing.
               this.notify({ message: this.errorLabel ? this.i18n(this.errorLabel, error) : error });
             }
 
-            this._spinnerStop(true);
+            this._spinnerStop();
 
             if (error.status !== 404) {
               throw error;
@@ -378,35 +378,11 @@ And disable button while action is executing.
         }
       },
 
-      _spinnerStop: function (forceStop) {
-
-        if (!this.displaySpinner) {
-          return;
-        }
-
-        if (forceStop) {
-          thisObj.$.spinner.style.display = "none";
+      _spinnerStop: function () {
+        if (this.displaySpinner) {
+          this.$.spinner.style.display = "none";
           this.$.spinner.active = false;
-          return;
         }
-
-        let interval, elapsed;
-
-        // Even if the operation is fast, display the spinner for at least 2
-        // seconds.
-        elapsed = Date.now() - this.spinnerStart;
-        if (elapsed > 2000) {
-          interval = 10;
-        } else {
-          interval = 2500 - elapsed;
-        }
-
-        var thisObj = this;
-        window.setTimeout(function () {
-          thisObj.$.spinner.style.display = "none";
-          thisObj.$.spinner.active = false;
-        }, interval);
-
       }
 
     });
