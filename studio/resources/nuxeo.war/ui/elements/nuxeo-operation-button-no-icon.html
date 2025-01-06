@@ -17,7 +17,11 @@ And also an optional spinner to have a UI while waiting fomr completion.
 -->
 <dom-module id="nuxeo-operation-button-no-icon">
   <template>
-    <style include="nuxeo-action-button-styles nuxeo-styles"></style>
+    <style include="nuxeo-action-button-styles nuxeo-styles">
+      .spinner {
+        margin-left: 1em;
+      }
+    </style>
 
     <nuxeo-operation id="op"
                      op="[[operation]]"
@@ -34,9 +38,10 @@ And also an optional spinner to have a UI while waiting fomr completion.
     <div class="action"
          on-click="_execute">
       <paper-button class="primary">[[i18n(label)]]</paper-button>
-      <paper-spinner hidden$="[[!displaySpinner]]"
-                     style="margin-left: 1em;"
-                     id="spinner"></paper-spinner>
+      <paper-spinner class="spinner"
+                     hidden$="[[!displaySpinner]]"
+                     id="spinner">
+      </paper-spinner>
     </div>
 
   </template>
