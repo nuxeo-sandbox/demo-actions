@@ -73,12 +73,6 @@ JSON result of the operation.
       behaviors: [Nuxeo.LayoutBehavior],
 
       properties: {
-        /* See displaySpinner property in nuxeo-operation-button-no-icon */
-        displaySpinner: {
-          type: Boolean,
-          value: false
-        },
-
         /* The id of the operation, automation chain or script to call. */
         operation: String,
 
@@ -156,7 +150,6 @@ JSON result of the operation.
           type: String,
         },
 
-
         /**
         * Label for the action button.
         */
@@ -175,8 +168,13 @@ JSON result of the operation.
         _showResponse: {
           type: Boolean,
           value: false
-        }
+        },
 
+        /* See displaySpinner property in nuxeo-operation-button-no-icon */
+        displaySpinner: {
+          type: Boolean,
+          value: false
+        }
       },
 
       _formatResponse: function (response) {
