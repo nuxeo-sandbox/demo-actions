@@ -13,21 +13,15 @@ nuxeo-operation-button doesn't seem to support it.
 And a bug fix for https://jira.nuxeo.com/browse/ELEMENTS-1071;
 nuxeo-operation-button doesn't actually use the `response` param.
 
-And an optional toast displayed during action execution.
+And an optional spinner displayed during action execution.
 -->
 <dom-module id="nuxeo-operation-button-no-icon">
   <template>
 
-    <style include="iron-flex iron-flex-alignment nuxeo-action-button-styles nuxeo-styles">
+    <style include="nuxeo-action-button-styles nuxeo-styles">
       .spinner {
         margin-left: 1em;
-      }
-
-      /* This is to match the positioning of the mwc-snackbars used by WebUI */
-      .progress {
-        margin: 8px;
-        margin-left: 58px;
-        border-radius: 4px;
+        display: none;
       }
     </style>
 
@@ -46,18 +40,10 @@ And an optional toast displayed during action execution.
     <div class="action"
          on-click="_execute">
       <paper-button class="primary">[[i18n(label)]]</paper-button>
+      <paper-spinner class="spinner"
+                     id="spinner">
+      </paper-spinner>
     </div>
-
-    <paper-toast id="progressToast"
-                 class="progress"
-                 duration="0">
-      <div class="layout horizontal flex center">
-        <div>[[label]] executing, please wait...</div>
-        <paper-spinner class="spinner"
-                       active>
-        </paper-spinner>
-      </div>
-    </paper-toast>
 
   </template>
 
@@ -152,7 +138,7 @@ And an optional toast displayed during action execution.
           type: String,
         },
 
-        /* If true, a toast is displayed until the operation completes. */
+        /* If true, a spinner is displayed until the operation completes. */
         displaySpinner: {
           type: Boolean,
           value: false
@@ -379,7 +365,8 @@ And an optional toast displayed during action execution.
 
       _spinnerStart: function () {
         if (this.displaySpinner) {
-          this.$.progressToast.show();
+          this.$.spinner.style.display = "inline-block";
+          this.$.spinner.active = true;
           this.spinnerStart = Date.now();
         }
       },
@@ -391,7 +378,8 @@ And an optional toast displayed during action execution.
         }
 
         if (forceStop) {
-          this.$.progressToast.close();
+          thisObj.$.spinner.style.display = "none";
+          this.$.spinner.active = false;
           return;
         }
 
@@ -408,8 +396,8 @@ And an optional toast displayed during action execution.
 
         var thisObj = this;
         window.setTimeout(function () {
-          thisObj.$.progressToast.close();
-
+          thisObj.$.spinner.style.display = "none";
+          thisObj.$.spinner.active = false;
         }, interval);
 
       }
