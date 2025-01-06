@@ -14,11 +14,13 @@ And a bug fix for https://jira.nuxeo.com/browse/ELEMENTS-1071;
 nuxeo-operation-button doesn't actually use the `response` param.
 
 And an optional spinner displayed during action execution.
+
+And disable button while action is executing.
 -->
 <dom-module id="nuxeo-operation-button-no-icon">
   <template>
 
-    <style include="nuxeo-action-button-styles nuxeo-styles">
+    <style include="iron-flex iron-flex-alignment nuxeo-action-button-styles nuxeo-styles">
       .spinner {
         margin-left: 1em;
         display: none;
@@ -37,9 +39,11 @@ And an optional spinner displayed during action execution.
                      on-poll-error="_onPollError">
     </nuxeo-operation>
 
-    <div class="action"
-         on-click="_execute">
-      <paper-button class="primary">[[i18n(label)]]</paper-button>
+    <div class="layout flex horizontal center">
+      <paper-button id="opButton"
+                    class="primary"
+                    on-tap="_execute">[[i18n(label)]]</paper-button>
+
       <paper-spinner class="spinner"
                      id="spinner">
       </paper-spinner>
@@ -150,6 +154,7 @@ And an optional spinner displayed during action execution.
       },
 
       _execute: function () {
+        this.$.opButton.disabled = true;
         this._spinnerStart();
         return this.$.op
           .execute()
@@ -207,7 +212,8 @@ And an optional spinner displayed during action execution.
                       )
                       : '',
                 });
-              }
+              };
+              this.$.opButton.disabled = false;
               this._spinnerStop();
               return response;
             }
@@ -215,6 +221,7 @@ And an optional spinner displayed during action execution.
             if (this.download) {
               this._download(response);
             }
+            this.$.opButton.disabled = false;
             this._spinnerStop();
           })
           .catch((error) => {
