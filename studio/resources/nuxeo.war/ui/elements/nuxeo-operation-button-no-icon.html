@@ -381,21 +381,21 @@ And an optional spinner displayed during action execution.
           return;
         }
 
-        let intervall, ellapsed;
+        let interval, elapsed;
 
         // Even if the operation is fast, display the spinner for at least 2
         // seconds.
-        ellapsed = Date.now() - this.spinnerStart;
-        if (ellapsed > 2000) {
-          intervall = 10;
+        elapsed = Date.now() - this.spinnerStart;
+        if (elapsed > 2000) {
+          interval = 10;
         } else {
-          intervall = 2500 - ellapsed;
+          interval = 2500 - elapsed;
         }
 
         var thisObj = this;
         window.setTimeout(function () {
           thisObj.$.spinner.active = false;
-        }, intervall);
+        }, interval);
 
       }
 
