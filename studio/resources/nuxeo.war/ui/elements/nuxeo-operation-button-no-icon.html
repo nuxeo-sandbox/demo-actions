@@ -25,6 +25,10 @@ And disable button while action is executing.
         margin-left: 1em;
         display: none;
       }
+
+      .spinner[active] {
+        display: block;
+      }
     </style>
 
     <nuxeo-operation id="op"
@@ -45,7 +49,7 @@ And disable button while action is executing.
                     on-tap="_execute">[[i18n(label)]]</paper-button>
 
       <paper-spinner class="spinner"
-                     id="spinner">
+                     active="[[spinnerActive]]">
       </paper-spinner>
     </div>
 
@@ -142,20 +146,21 @@ And disable button while action is executing.
           type: String,
         },
 
-        /* If true, a spinner is displayed until the operation completes. */
-        displaySpinner: {
+        spinnerActive: {
           type: Boolean,
-          value: false
+          value: false,
         },
 
-        // TODO: What does this do?
-        spinnerStart: Date
+        _spinnerTimeout: {
+          type: Number,
+          value: null,
+        },
 
       },
 
       _execute: function () {
-        this.$.opButton.disabled = true;
-        this._spinnerStart();
+        this._progressStart();
+
         return this.$.op
           .execute()
           .then((response) => {
@@ -213,16 +218,17 @@ And disable button while action is executing.
                       : '',
                 });
               };
-              this.$.opButton.disabled = false;
-              this._spinnerStop();
+
+              this._progressStop();
+
               return response;
             }
 
             if (this.download) {
               this._download(response);
             }
-            this.$.opButton.disabled = false;
-            this._spinnerStop();
+
+            this._progressStop();
           })
           .catch((error) => {
             if (this._hasBulkStatus(error)) {
@@ -255,7 +261,7 @@ And disable button while action is executing.
               this.notify({ message: this.errorLabel ? this.i18n(this.errorLabel, error) : error });
             }
 
-            this._spinnerStop();
+            this._progressStop();
 
             if (error.status !== 404) {
               throw error;
@@ -370,19 +376,21 @@ And disable button while action is executing.
         });
       },
 
-      _spinnerStart: function () {
-        if (this.displaySpinner) {
-          this.$.spinner.style.display = "inline-block";
-          this.$.spinner.active = true;
-          this.spinnerStart = Date.now();
-        }
+      _progressStart: function () {
+        // Disable action button while action is executing
+        this.$.opButton.disabled = true;
+        // Start a timeout for the spinner
+        this._spinnerTimeout = setTimeout(() => {
+          this.spinnerActive = true;
+        }, 300);
       },
 
-      _spinnerStop: function () {
-        if (this.displaySpinner) {
-          this.$.spinner.style.display = "none";
-          this.$.spinner.active = false;
-        }
+      _progressStop: function () {
+        // Enable action button
+        this.$.opButton.disabled = false;
+        // Clear the spinner timeout and hide the spinner
+        clearTimeout(this._spinnerTimeout);
+        this.spinnerActive = false;
       }
 
     });
