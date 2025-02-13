@@ -2,7 +2,7 @@
 
 This is a [Nuxeo Studio](https://doc.nuxeo.com/n/dqH) Project to be used as a [multi-layer](https://doc.nuxeo.com/n/LVQ) dependency. The code is being stored in GitHub using the [External Source Repository](https://doc.nuxeo.com/n/ZB4) feature.
 
-This project adds a menu entry in the [Administration interface](https://doc.nuxeo.com/userdoc/administration/) and a layout that can contain “demo actions”, which is to say actions that are related to managing the demo instance, not actions that are part of the demo. An example would be a “demo reset” action.
+This project adds a menu entry in the [Administration interface](https://doc.nuxeo.com/userdoc/administration/) and a layout that can contain “demo actions", which is to say actions that are related to managing the demo instance, not actions that are part of the demo. An example would be a “demo reset" action.
 
 # Configuration
 
@@ -11,7 +11,7 @@ Contribute your content to the `DEMO_ACTIONS` slot. It will be listed on the pag
 ```HTML
 <nuxeo-slot-content name="demoActionOne" slot="DEMO_ACTIONS">
   <template>
-    <da-demo-action label=”My Label” description=”My Description” operation="javascript.myopp"></da-demo-action>
+    <da-demo-action label="My Label" description="My Description" operation="javascript.myopp"></da-demo-action>
   </template>
 </nuxeo-slot-content>
 ```
