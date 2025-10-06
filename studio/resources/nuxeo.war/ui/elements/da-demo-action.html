@@ -46,14 +46,7 @@ JSON result of the operation.
                                         error-label="[[errorLabel]]"
                                         display-spinner="[[displaySpinner]]">
         </nuxeo-operation-button-no-icon>
-        <div class="layout flex displayed-to-right">
-          <template is="dom-if" if="[[!descriptionIsHtml]]">
-            <div>[[i18n(description)]]</div>
-          </template>
-          <template is="dom-if" if="[[descriptionIsHtml]]">
-            <div inner-h-t-m-l="[[description]]"></div>
-          </template>
-        </div>
+        <div class="layout flex displayed-to-right">[[i18n(description)]]</div>
         <paper-toggle-button hidden$="[[!response]]"
                              checked="{{_showResponse}}"
                              class="displayed-to-right">[[i18n('da.label.show-response-button-label')]]</paper-toggle-button>
@@ -167,11 +160,6 @@ JSON result of the operation.
         */
         description: {
           type: String,
-        },
-
-        descriptionIsHtml: {
-          type: Boolean,
-          value: false,
         },
 
         /**
