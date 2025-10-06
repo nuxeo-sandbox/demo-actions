@@ -47,7 +47,7 @@ JSON result of the operation.
                                         display-spinner="[[displaySpinner]]">
         </nuxeo-operation-button-no-icon>
         <div class="layout flex displayed-to-right">
-          <template is=""dom-if" if="[[!descriptionIsHtml]]">
+          <template is="dom-if" if="[[!descriptionIsHtml]]">
             <div>[[i18n(description)]]</div>
           </template>
           <template is="dom-if" if="[[descriptionIsHtml]]">
