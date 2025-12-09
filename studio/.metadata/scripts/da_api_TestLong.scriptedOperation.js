@@ -17,4 +17,3 @@ function sleep(milliseconds) {
     // Busy wait
   }
 }
-
