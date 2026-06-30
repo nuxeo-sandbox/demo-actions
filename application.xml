@@ -5,6 +5,5 @@
   </targetPlatform>
   <dependencies class="linked-hash-set">
     <string>nuxeo-web-ui:2025.15.0</string>
-    <string>nuxeo-arender:2025.0.4</string>
   </dependencies>
 </application>
