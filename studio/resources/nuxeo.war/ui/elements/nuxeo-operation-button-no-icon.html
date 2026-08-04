@@ -10,7 +10,7 @@ paper-icon-button so that an icon is not required.
 Also a small conceit to style the button with `primary` since
 nuxeo-operation-button doesn't seem to support it.
 
-And a bug fix for https://jira.nuxeo.com/browse/ELEMENTS-1071;
+And a bug fix for https://hyland.atlassian.net/browse/ELEMENTS-1071;
 nuxeo-operation-button doesn't actually use the `response` param.
 
 And an optional spinner displayed during action execution.
@@ -269,7 +269,7 @@ And disable button while action is executing.
           });
       },
 
-      // https://jira.nuxeo.com/browse/ELEMENTS-370
+      // https://hyland.atlassian.net/browse/ELEMENTS-370
       _download: function (response) {
         const contentDisposition = response.headers && response.headers.get('Content-Disposition');
         if (contentDisposition) {
